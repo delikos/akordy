@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transponowanie akordów</title>
+    <style>
+        body{
+            margin: 0;
+            background-color: lightgrey;
+        }
+        header{
+            background-color: rgb(158, 150, 150);
+            height: 50%;
+        }
+        .kontenr{
+            border: 1px solid black;
+            border-radius: 2vh;
+            width: 45%;
+            padding-bottom: 4vh;
+            margin-top: 10vh;
+            text-align: center;
+            margin: 5vh auto 0 auto;
+            background-color: white;
+            min-width: 320px
+        }
+        .transponowanie{
+            font-size: 50px;
+            padding-top: 1vh;
+            padding-bottom: 1vh;
+            padding-left: 3vh;
+            margin: 0;
+        }
+        .glownyakordzik{
+            font-size: 4vh;
+            margin-bottom:19px;
+            margin-top: 20px;
+        }
+        .glownyakordzik1{
+            font-size:4vh;
+            display: inline;
+        }
+        footer{
+            bottom: 0;
+            width: 100%;
+            position: absolute;
+            font-size: 25px;
+            /* height: 40px; */
+            padding-top:10px;
+            padding-bottom: 10px;
+            text-align: center;
+            margin: auto;
+            margin-top: auto;
+            background-color: rgb(158, 150, 150);
+        }
+        textarea{
+            width: 50%;
+            height: 10vh;
+            font-size: 4vh;
+            margin-top: 1.5vh;
+            padding-left: 10px;
+        }
+        #tonacja{
+            font-size: 25px;
+            margin-bottom: 12px;
+        }
+        .tonation{
+            font-size:25px;
+            margin-bottom:12px
+        }
+        #wyjscie{
+            font-size:4vh;
+            border:1px solid black;
+            border-radius: 10px;
+            width: 50%;
+            margin: auto;
+            min-height: 5vh;
+            margin-top:10px;
+            padding:4px
+        }
+        @media (max-width:546px){
+                .kontenr{
+                margin-top:30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header><p class="transponowanie">Transponowanie akordów</p></header>
+    <div class="kontenr">
+        <p class="glownyakordzik">Wpisz akord który chcesz przetransponować:</p>
+        <textarea id="wejscie" name="w3review" rows="4" cols="50" placeholder="Podaj akord:"></textarea>
+        <p class="glownyakordzik">Wybierz tonację na którą chcesz przestroić:</p>
+    <form>
+        <!-- <input type="text" id="wejscie"> -->
+        <select id="tonacja">
+            <option value="C">C</option>           
+            <option value="Cis">Cis</option>            
+            <option value="D">D</option>           
+            <option value="Dis">Dis</option>           
+            <option value="E">E</option>           
+            <option value="F">F</option>           
+            <option value="Fis">Fis</option>            
+            <option value="G">G</option>            
+            <option value="Gis">Gis</option>
+            <option value="A">A</option>
+            <option value="Ais">Ais</option>
+            <option value="B">B</option>
+        </select>
+        <input type="button" value="Przestrój" class="tonation" onclick="przestroj()">
+    </form>
+    <p class="glownyakordzik1">Twoje akordy to:</p><div id="wyjscie"></div>
+    <script>
+        var dzwieki = ["C", "c", "Cis", "cis", "D", "d", "Dis", "dis", "E", "e", "F", "f", "Fis", "fis", "G", "g", "Gis", "gis", "A", "a", "Ais", "ais", "B", "b"];
+        var wejscie = document.getElementById("wejscie");
+        var wyjscie = document.getElementById("wyjscie");
+        var selekt = document.getElementById("tonacja");
+        function przestroj() {
+            let progresja = wejscie.value.trim().split(" ");
+            let progresja2 = [];
+            let idp = dzwieki.indexOf(progresja[0]);
+            let idp2 = dzwieki.indexOf(selekt.value);
+            if (progresja[0][0] == progresja[0][0].toLowerCase()) {
+                idp2++;
+            }
+            let transpozycja = idp2 - idp;
+            for (let i of progresja) {
+                let idx = dzwieki.indexOf(i);
+                let n = (idx+transpozycja)%24;
+                if (idx == -1) {
+                    alert("Nie ma takiego akordu jak " + i);
+                    return;
+                }
+                if (n >= 0) {
+                    progresja2.push(dzwieki[n]);
+                } else {
+                    progresja2.push(dzwieki[24+n]);
+                }
+            }
+            wyjscie.innerHTML = progresja2.join(" ");
+        }
+    </script>
+    </div>
+    <footer>Projekt strony wykonali  Kuba Będkowski oraz Dawid Król z klasy 1pr. </footer>
+</body>
+</html>
